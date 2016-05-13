@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import io.cloudslang.content.httpclient.ScoreHttpClient;
 import io.cloudslang.content.openstack.constants.OutputNames;
 import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
+import io.cloudslang.content.openstack.utils.HttpClientUtils;
 
 import java.util.Map;
 
@@ -17,9 +18,7 @@ public class HttpRequestService {
 
     private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper) {
         ScoreHttpClient scoreClient = new ScoreHttpClient();
-        scoreClient.execute(requestWrapper.parseToInputs());
-
-        return scoreClient.execute(requestWrapper.parseToInputs());
+        return scoreClient.execute(new HttpClientUtils().initHttpClientInputs(requestWrapper));
     }
 
     public Map<String, String> getAuthToken(HttpRequestWrapper requestWrapper) {

@@ -9,7 +9,6 @@ import com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType;
 import io.cloudslang.content.openstack.constants.InputNames;
 import io.cloudslang.content.openstack.constants.OutputNames;
 import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
-import io.cloudslang.content.openstack.entities.HttpResponseWrapper;
 import io.cloudslang.content.openstack.services.HttpRequestService;
 import io.cloudslang.content.openstack.utils.StringUtils;
 
@@ -17,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GetAuthToken {
-    private static final HttpRequestService httpRequestService = new HttpRequestService();
+    private final HttpRequestService httpRequestService = new HttpRequestService();
 
     @Action(
             name = "Get Authenticate Token",
@@ -42,7 +41,7 @@ public class GetAuthToken {
                             isOnFail = true)
             }
     )
-    public static Map<String, String> execute(@Param(value = InputNames.HOST, required = true) String host,
+    public Map<String, String> execute(@Param(value = InputNames.HOST, required = true) String host,
                                             @Param(InputNames.PORT) String port,
                                             @Param(InputNames.PROTOCOL) String protocol,
                                             @Param(InputNames.USERNAME) String username,

@@ -8,11 +8,7 @@ import java.util.Map;
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
 
-/**
- * Created by stcu on 12.05.2016.
- */
 public class HttpRequestServiceTest {
     GetAuthToken authToken = new GetAuthToken();
     private final String RETURN_CODE = "returnCode";

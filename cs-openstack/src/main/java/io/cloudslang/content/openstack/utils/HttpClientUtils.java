@@ -23,6 +23,7 @@ public class HttpClientUtils {
         httpClientInputs.setProxyPort(wrapper.getProxyPort());
         httpClientInputs.setProxyUsername(wrapper.getProxyUsername());
         httpClientInputs.setProxyPassword(wrapper.getProxyPassword());
+        httpClientInputs.setBody(wrapper.getRequestBody());
 
         if (StringUtils.isNotBlank(wrapper.getTrustAllRoots())) {
             httpClientInputs.setTrustAllRoots(wrapper.getTrustAllRoots());

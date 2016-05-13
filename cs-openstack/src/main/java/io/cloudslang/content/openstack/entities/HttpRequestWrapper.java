@@ -212,34 +212,4 @@ public class HttpRequestWrapper {
     public void setRequestUri(String requestUri) {
         this.requestUri = requestUri;
     }
-
-    public HttpClientInputs parseToInputs() {
-        HttpClientInputs httpClientInputs = new HttpClientInputs();
-
-        httpClientInputs.setUrl(getProtocol() + getHost() + ":" + getPort() + getRequestUri());
-        httpClientInputs.setMethod(getRequestMethod());
-        httpClientInputs.setContentType(APPLICATION_JSON);
-        httpClientInputs.setProxyHost(getProxyHost());
-        httpClientInputs.setProxyPort(getProxyPort());
-        httpClientInputs.setProxyUsername(getProxyUsername());
-        httpClientInputs.setProxyPassword(getProxyPassword());
-        httpClientInputs.setBody(getRequestBody());
-
-        if (StringUtils.isNotBlank(getTrustAllRoots())) {
-            httpClientInputs.setTrustAllRoots(getTrustAllRoots());
-        }
-        if (StringUtils.isNotBlank(getX509HostnameVerifier())) {
-            httpClientInputs.setX509HostnameVerifier(getX509HostnameVerifier());
-        }
-        if (StringUtils.isNotBlank(getTrustKeystore())) {
-            httpClientInputs.setTrustKeystore(getTrustKeystore());
-        }
-        if (StringUtils.isNotBlank(getTrustPassword())) {
-            httpClientInputs.setTrustPassword(getTrustPassword());
-        }
-
-        httpClientInputs.setConnectionPoolSessionObject(new GlobalSessionObject());
-
-        return httpClientInputs;
-    }
 }
