@@ -20,5 +20,4 @@ public class InputNames {
     public static final String TRUST_PASSWORD = "trustPassword";
     public static final String SOCKET_TIMEOUT = "socketTimeout";
     public static final String REQUEST_BODY = "requestBody";
-
 }

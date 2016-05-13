@@ -83,10 +83,8 @@ public class GetAuthToken {
             requestWrapper.setRequestBody(StringUtils.toString(requestBody, ""));
             requestWrapper.setRequestMethod("POST");
             requestWrapper.setRequestUri("/v2.0/tokens");
-            HttpResponseWrapper responseWrapper = httpRequestService.performRestCall(requestWrapper);
-            resultMap.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_SUCCESS);
-            resultMap.put(OutputNames.RETURN_RESULT, responseWrapper.getResult());
-            resultMap.put(OutputNames.RESPONSE_BODY, responseWrapper.getResponseBody());
+
+            resultMap = httpRequestService.getAuthToken(requestWrapper);
         } catch (Exception ex) {
             resultMap.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
             resultMap.put(OutputNames.RETURN_RESULT, ex.getMessage());

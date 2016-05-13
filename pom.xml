@@ -178,6 +178,7 @@
         <module>score-jClouds</module>
         <module>score-xml</module>
         <module>cs-date-time</module>
+        <module>cs-openstack</module>
         <module>score-vmware</module>
     </modules>
 </project>

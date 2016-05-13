@@ -4,6 +4,8 @@ public class HttpResponseWrapper<T> {
     private T responseBodyObject;
     private String responseBody;
     private String result;
+    private String token;
+    private String tenantId;
 
     public T getResponseBodyObject() {
         return responseBodyObject;
@@ -27,5 +29,21 @@ public class HttpResponseWrapper<T> {
 
     public void setResult(String result) {
         this.result = result;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
     }
 }
