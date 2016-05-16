@@ -10,14 +10,14 @@ import java.util.Map;
  */
 public class ListNetworksTest {
 
-    ListNetworks listNtws = new ListNetworks();
+    ListNetworks listNetworks = new ListNetworks();
 
 
     @Test
-    public void getNetworksList() {
+    public void getNetworksListValid() {
 
+        String token = "89324c08215641da876df2d60946c4a4";
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
-        String token = "f254fa31d6e04d548acf74c49ea721a5";
         String port = "9696";
         String protocol = "";
         String username = "";
@@ -36,7 +36,7 @@ public class ListNetworksTest {
         String socketTimeout = "";
         String requestBody = "";
 
-        Map<String, String> results = listNtws.execute(host, token, port, protocol, username, password, proxyHost, proxyPort,
+        Map<String, String> results = listNetworks.execute(token, host, port, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
                 keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
     }

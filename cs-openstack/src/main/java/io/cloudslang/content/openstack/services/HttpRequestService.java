@@ -3,10 +3,12 @@ package io.cloudslang.content.openstack.services;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import io.cloudslang.content.httpclient.HttpClientInputs;
 import io.cloudslang.content.httpclient.ScoreHttpClient;
 import io.cloudslang.content.openstack.constants.OutputNames;
 import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
 import io.cloudslang.content.openstack.utils.HttpClientUtils;
+import io.cloudslang.content.openstack.utils.StringUtils;
 
 import java.util.Map;
 
@@ -17,7 +19,7 @@ public class HttpRequestService {
     private final String JSON_PARAM_ID = "id";
 
     public Map<String, String> getAuthToken(HttpRequestWrapper requestWrapper) {
-        Map<String, String> results = performRestCall(requestWrapper);
+        Map<String, String> results = performRestCall(requestWrapper, null);
 
         if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_200_SUCCESS_CODE)
                 || results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
@@ -36,8 +38,29 @@ public class HttpRequestService {
         return results;
     }
 
-    private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper) {
+    public Map<String, String> getNetworksList(HttpRequestWrapper requestWrapper, String token) {
+
+        Map<String, String> results = performRestCall(requestWrapper, token);
+
+        if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_200_SUCCESS_CODE)
+                || results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
+            results.put(OutputNames.RESPONSE_BODY, results.get(OutputNames.RESPONSE_BODY));
+        } else {
+            results.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
+        }
+
+        return results;
+    }
+
+    private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper, String token) {
+
         ScoreHttpClient scoreClient = new ScoreHttpClient();
-        return scoreClient.execute(new HttpClientUtils().initHttpClientInputs(requestWrapper));
+        HttpClientInputs inputs = new HttpClientUtils().initHttpClientInputs(requestWrapper);
+
+        if (StringUtils.isNotBlank(token)) {
+            inputs.setHeaders("X-Auth-Token:" + token);
+        }
+
+        return scoreClient.execute(inputs);
     }
 }

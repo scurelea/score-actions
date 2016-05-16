@@ -46,8 +46,8 @@ public class ListNetworks {
             }
     )
 
-    public static Map<String, String> execute(@Param(value = InputNames.HOST, required = true) String host,
-                                              @Param(value = InputNames.TOKEN, required = true) String token,
+    public static Map<String, String> execute(@Param(value = InputNames.TOKEN, required = true) String token,
+                                              @Param(value = InputNames.HOST, required = true) String host,
                                               @Param(InputNames.PORT) String port,
                                               @Param(InputNames.PROTOCOL) String protocol,
                                               @Param(InputNames.USERNAME) String username,
@@ -65,11 +65,12 @@ public class ListNetworks {
                                               @Param(InputNames.CONNECT_TIMEOUT) String connectTimeout,
                                               @Param(InputNames.SOCKET_TIMEOUT) String socketTimeout,
                                               @Param(InputNames.REQUEST_BODY) String requestBody) {
+
         Map<String, String> resultMap = new HashMap<>();
         HttpRequestWrapper requestWrapper = new HttpRequestWrapper();
         try {
-            requestWrapper.setHost(StringUtils.toRequiredString(host, ""));
             requestWrapper.setHost(StringUtils.toRequiredString(token, ""));
+            requestWrapper.setHost(StringUtils.toRequiredString(host, ""));
             requestWrapper.setPort(StringUtils.toString(port, ""));
             requestWrapper.setProtocol(StringUtils.toString(protocol, ""));
             requestWrapper.setUsername(StringUtils.toString(username, ""));
@@ -90,10 +91,7 @@ public class ListNetworks {
             requestWrapper.setRequestMethod("GET");
             requestWrapper.setRequestUri("/v2.0/networks");
 
-            HttpResponseWrapper responseWrapper = httpRequestService.performRestCall(requestWrapper);
-            resultMap.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_SUCCESS);
-            resultMap.put(OutputNames.RETURN_RESULT, responseWrapper.getResult());
-            resultMap.put(OutputNames.RESPONSE_BODY, responseWrapper.getResponseBody());
+            resultMap = httpRequestService.getNetworksList(requestWrapper, token);
         } catch (Exception ex) {
             resultMap.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
             resultMap.put(OutputNames.RETURN_RESULT, ex.getMessage());
