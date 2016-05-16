@@ -1,6 +1,5 @@
-package io.cloudslang.content.openstack.services;
+package io.cloudslang.content.openstack.actions;
 
-import io.cloudslang.content.openstack.actions.GetAuthToken;
 import org.junit.Test;
 
 import java.util.Map;
@@ -9,7 +8,7 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 
-public class HttpRequestServiceTest {
+public class GetAuthTokenTest {
     GetAuthToken authToken = new GetAuthToken();
     private final String RETURN_CODE = "returnCode";
     private final String RETURN_RESULT = "returnResult";
