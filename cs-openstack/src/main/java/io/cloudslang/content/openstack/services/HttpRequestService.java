@@ -16,18 +16,12 @@ public class HttpRequestService {
     private final String JSON_OBJECT_TENANT = "tenant";
     private final String JSON_PARAM_ID = "id";
 
-    private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper) {
-        ScoreHttpClient scoreClient = new ScoreHttpClient();
-        return scoreClient.execute(new HttpClientUtils().initHttpClientInputs(requestWrapper));
-    }
-
     public Map<String, String> getAuthToken(HttpRequestWrapper requestWrapper) {
         Map<String, String> results = performRestCall(requestWrapper);
 
         if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_200_SUCCESS_CODE)
                 || results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
-            Gson gson = new Gson();
-            JsonElement element = gson.fromJson (results.get(OutputNames.RETURN_RESULT), JsonElement.class);
+            JsonElement element = new Gson().fromJson (results.get(OutputNames.RETURN_RESULT), JsonElement.class);
             JsonObject jsonToken = element.getAsJsonObject().getAsJsonObject(JSON_OBJECT_ACCESS)
                     .getAsJsonObject(JSON_OBJECT_TOKEN);
 
@@ -40,5 +34,10 @@ public class HttpRequestService {
         }
 
         return results;
+    }
+
+    private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper) {
+        ScoreHttpClient scoreClient = new ScoreHttpClient();
+        return scoreClient.execute(new HttpClientUtils().initHttpClientInputs(requestWrapper));
     }
 }
