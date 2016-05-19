@@ -16,6 +16,7 @@ public class HttpRequestService {
     private final String JSON_OBJECT_ACCESS = "access";
     private final String JSON_OBJECT_TOKEN = "token";
     private final String JSON_OBJECT_TENANT = "tenant";
+    private final String JSON_OBJECT_NETWORK = "network";
     private final String JSON_PARAM_ID = "id";
 
     public Map<String, String> getAuthToken(HttpRequestWrapper requestWrapper) {
@@ -44,6 +45,25 @@ public class HttpRequestService {
 
         if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_200_SUCCESS_CODE)
                 || results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
+            results.put(OutputNames.RESPONSE_BODY, results.get(OutputNames.RESPONSE_BODY));
+        } else {
+            results.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
+        }
+
+        return results;
+    }
+
+    public Map<String, String> createNetwork(HttpRequestWrapper requestWrapper, String token) {
+
+        Map<String, String> results = performRestCall(requestWrapper, token);
+
+        JsonElement element = new Gson().fromJson (results.get(OutputNames.RETURN_RESULT), JsonElement.class);
+        JsonObject jsonToken = element.getAsJsonObject().getAsJsonObject(JSON_OBJECT_NETWORK);
+
+        String uuid = jsonToken.get(JSON_PARAM_ID).getAsString();
+        results.put(OutputNames.UUID, uuid);
+
+        if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
             results.put(OutputNames.RESPONSE_BODY, results.get(OutputNames.RESPONSE_BODY));
         } else {
             results.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);

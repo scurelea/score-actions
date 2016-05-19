@@ -8,6 +8,7 @@ public class OutputNames{
     public static final String RESPONSE_BODY = "responseBody";
     public static final String AUTH_TOKEN = "authToken";
     public static final String TENANT_ID = "tenantId";
+    public static final String UUID = "uuid";
     public static final String STATUS_CODE = "statusCode";
 
     // Responses
