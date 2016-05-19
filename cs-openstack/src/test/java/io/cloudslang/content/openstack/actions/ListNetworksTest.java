@@ -24,7 +24,7 @@ public class ListNetworksTest {
     @Test
     public void getNetworksListValid() {
 
-        String token = "3f83caa35c9f426aa7e0292d2e6a15fe";
+        String token = "2d15749446b042689ccbf6145ef9cd96";
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "9696";
         String protocol = "";
@@ -42,11 +42,10 @@ public class ListNetworksTest {
         String keystorePassword = "";
         String connectTimeout = "";
         String socketTimeout = "";
-        String requestBody = "";
 
         Map<String, String> results = listNetworks.execute(token, host, port, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
-                keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
+                keystore, keystorePassword, connectTimeout, socketTimeout);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("0", results.get(RETURN_CODE));
@@ -74,11 +73,10 @@ public class ListNetworksTest {
         String keystorePassword = "";
         String connectTimeout = "";
         String socketTimeout = "";
-        String requestBody = "";
 
         Map<String, String> results = listNetworks.execute(token, host, port, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
-                keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
+                keystore, keystorePassword, connectTimeout, socketTimeout);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));

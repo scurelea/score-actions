@@ -63,8 +63,7 @@ public class ListNetworks {
                                               @Param(InputNames.KEYSTORE) String keystore,
                                               @Param(value = InputNames.KEYSTORE_PASSWORD, encrypted = true) String keystorePassword,
                                               @Param(InputNames.CONNECT_TIMEOUT) String connectTimeout,
-                                              @Param(InputNames.SOCKET_TIMEOUT) String socketTimeout,
-                                              @Param(InputNames.REQUEST_BODY) String requestBody) {
+                                              @Param(InputNames.SOCKET_TIMEOUT) String socketTimeout) {
 
         Map<String, String> resultMap = new HashMap<>();
         HttpRequestWrapper requestWrapper = new HttpRequestWrapper();
@@ -87,7 +86,6 @@ public class ListNetworks {
             requestWrapper.setKeystorePassword(StringUtils.toString(keystorePassword, ""));
             requestWrapper.setConnectTimeout(StringUtils.toString(connectTimeout, ""));
             requestWrapper.setSocketTimeout(StringUtils.toString(socketTimeout, ""));
-            requestWrapper.setRequestBody(StringUtils.toString(requestBody, ""));
             requestWrapper.setRequestMethod("GET");
             requestWrapper.setRequestUri("/v2.0/networks");
 
