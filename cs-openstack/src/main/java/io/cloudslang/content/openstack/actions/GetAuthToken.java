@@ -18,6 +18,54 @@ import java.util.Map;
 public class GetAuthToken {
     private final HttpRequestService httpRequestService = new HttpRequestService();
 
+    /**
+     * Authenticates against a keystone identity service and returns an authentication token and a list of
+     * endpoints available to the specified user. This flow should handle authentication.
+     * @param host                      The OpenStack machine host.
+     * @param port                      The port used for OpenStack authentication - Default: '5000'.
+     * @param protocol                  The https or http protocol.
+     * @param username                  The user name used for URL authentication. For NTLM authentication, the
+     *                                  required format is 'domain\\user'.
+     * @param password                  The password used for URL authentication.
+     * @param proxyHost                 The proxy server used to access the web site.
+     * @param proxyPort                 The proxy server port.
+     * @param proxyUsername             The proxy server user name.
+     * @param proxyPassword             The proxy server password associated with the <proxyUsername> input value.
+     * @param trustAllRoots             Specifies whether to enable weak security over SSL. A SSL certificate is
+     *                                  trusted even if no trusted certification authority issued it.
+     * @param x509HostnameVerifier      Specifies the way the server hostname must match a domain name in the subject's
+     *                                  Common Name (CN) or subjectAltName field of the X.509 certificate. The hostname
+     *                                  verification system prevents communication with other hosts other than the ones
+     *                                  you intended. This is done by checking that the hostname is in the subject
+     *                                  alternative name extension of the certificate. This system is designed to ensure
+     *                                  that, if an attacker(Man In The Middle) redirects traffic to his machine, the
+     *                                  client will not accept the connection. If you set this input to "allow_all",
+     *                                  this verification is ignored and you become vulnerable to security attacks.
+     *                                  For the value "browser_compatible" the hostname verifier works the same way as
+     *                                  Curl and Firefox. The hostname must match either the first CN, or any of the
+     *                                  subject-alts. A wildcard can occur in the CN, and in any of the subject-alts.
+     *                                  The only difference between "browser_compatible" and "strict" is that a wildcard
+     *                                  (such as "*.foo.com") with "browser_compatible" matches all subdomains,
+     *                                  including "a.b.foo.com". From the security perspective, to provide protection
+     *                                  against possible Man-In-The-Middle attacks, we strongly recommend to use
+     *                                  "strict" option.
+     * @param trustKeystore             The location of the TrustStore file - a URL or the local path to it. This
+     *                                  input is empty if no HTTPS server authentication is used. The default value
+     *                                  will be provided if trustAllRoots is false.
+     * @param trustPassword             The password associated with the TrustStore file.  If trustAllRoots is
+     *                                  false and trustKeystore is empty, trustPassword default will be supplied.
+     * @param keystore                  The location of the KeyStore file - a URL or the local path to it. This
+     *                                  input is empty if no HTTPS client authentication is used. The default
+     *                                  value will be provided if trustAllRoots is false.
+     * @param keystorePassword          The password associated with the KeyStore file. If trustAllRoots is
+     *                                  false and keystore is empty, keystorePassword default will be supplied.
+     * @param connectTimeout            The time to wait for a connection to be established, in  milliseconds.
+     *                                  This input needs a value greater than or equal to zero.
+     * @param socketTimeout             The time to wait for data to be retrieved, in milliseconds. This input needs
+     *                                  a value greater than or equal to zero.
+     * @param requestBody
+     * @return
+     */
     @Action(
             name = "Get Authenticate Token",
             outputs = {
