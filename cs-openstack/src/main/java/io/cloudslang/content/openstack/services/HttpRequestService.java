@@ -72,6 +72,19 @@ public class HttpRequestService {
         return results;
     }
 
+    public Map<String, String> deleteNetwork(HttpRequestWrapper requestWrapper, String token) {
+
+        Map<String, String> results = performRestCall(requestWrapper, token);
+
+        if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_204_SUCCESS_CODE)) {
+            results.put(OutputNames.RESPONSE_BODY, results.get(OutputNames.RESPONSE_BODY));
+        } else {
+            results.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
+        }
+
+        return results;
+    }
+
     private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper, String token) {
 
         ScoreHttpClient scoreClient = new ScoreHttpClient();

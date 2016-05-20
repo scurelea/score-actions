@@ -19,6 +19,7 @@ public class OutputNames{
     public static final String RETURN_CODE_SUCCESS = "0";
     public static final String RETURN_CODE_FAILURE = "-1";
 
+    public static final String HTTP_204_SUCCESS_CODE = "204";
     public static final String HTTP_201_SUCCESS_CODE = "201";
     public static final String HTTP_200_SUCCESS_CODE = "200";
 }

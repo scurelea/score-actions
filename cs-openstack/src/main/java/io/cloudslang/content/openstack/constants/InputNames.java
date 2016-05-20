@@ -5,6 +5,7 @@ public class InputNames {
     public static final String TOKEN = "token";
     public static final String HOST = "host";
     public static final String PORT = "port";
+    public static final String NETWORK_ID = "networkId";
     public static final String PROTOCOL = "protocol";
     public static final String USERNAME = "username";
     public static final String PASSWORD = "password";

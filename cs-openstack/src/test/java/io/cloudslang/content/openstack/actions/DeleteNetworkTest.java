@@ -8,19 +8,20 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Created by cadm on 5/19/2016.
+ * Created by cadm on 5/20/2016.
  */
-public class CreateNetworkTest {
+public class DeleteNetworkTest {
 
-    CreateNetwork createNetwork = new CreateNetwork();
+    DeleteNetwork deleteNetwork = new DeleteNetwork();
     private final String RETURN_CODE = "returnCode";
     private final String RETURN_RESULT = "returnResult";
     private final String STATUS_CODE = "statusCode";
 
     @Test
-    public void createNetworkValid() {
+    public void deleteNetworkValid() {
 
-        String token = "528ef256f59a4c0e93669207b502f748";
+        String token = "554cc2d1103e4ac28241d7fbc090aa6d";
+        String networkId = "3306aa05-bb92-4787-8de9-225b28a06649";
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "9696";
         String protocol = "";
@@ -38,18 +39,13 @@ public class CreateNetworkTest {
         String keystorePassword = "";
         String connectTimeout = "";
         String socketTimeout = "";
-        String requestBody = "{\n" +
-                "    \"network\": {\n" +
-                "        \"admin_state_up\": true\n" +
-                "    }\n" +
-                "}";
+        String requestBody = "";
 
-        Map<String, String> results = createNetwork.execute(token, host, port, protocol, username, password, proxyHost, proxyPort,
+        Map<String, String> results = deleteNetwork.execute(token, networkId, host, port, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
                 keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
 
-        assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("0", results.get(RETURN_CODE));
-        assertEquals("201", results.get(STATUS_CODE));
+        assertEquals("204", results.get(STATUS_CODE));
     }
 }
