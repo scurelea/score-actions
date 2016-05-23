@@ -20,4 +20,8 @@ public class OutputNames{
 
     public static final String HTTP_201_SUCCESS_CODE = "201";
     public static final String HTTP_200_SUCCESS_CODE = "200";
+    public static final String HTTP_202_SUCCESS_CODE = "202";
+
+    //Volume Codes
+    public static final String VOLUME_ID = "volumeId";
 }
