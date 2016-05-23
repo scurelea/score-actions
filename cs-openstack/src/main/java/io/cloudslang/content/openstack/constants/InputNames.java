@@ -22,5 +22,6 @@ public class InputNames {
     public static final String REQUEST_BODY = "requestBody";
 
     public static final String TENANT_ID = "tenantId";
+    public static final String TENANT_NAME = "tenantName";
     public static final String TOKEN_ID = "tokenId";
 }

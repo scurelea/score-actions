@@ -1,9 +1,5 @@
 package io.cloudslang.content.openstack.actions;
 
-import io.cloudslang.content.openstack.entities.identity.Auth;
-import io.cloudslang.content.openstack.entities.identity.PasswordCredentials;
-import io.cloudslang.content.openstack.utils.json.JsonBuilder;
-import io.cloudslang.content.openstack.utils.json.JsonParser;
 import org.junit.Test;
 
 import java.util.Map;
@@ -14,7 +10,6 @@ import static org.junit.Assert.assertNull;
 
 public class GetAuthTokenTest {
     GetAuthToken authToken = new GetAuthToken();
-    JsonBuilder builder = new JsonBuilder();
     private final String RETURN_CODE = "returnCode";
     private final String RETURN_RESULT = "returnResult";
     private final String STATUS_CODE = "statusCode";
@@ -29,9 +24,9 @@ public class GetAuthTokenTest {
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "5000";
         String trustAllRoots = "true";
-        Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
+        Map<String, String> results = authToken.execute(host, port, null, USERNAME, PASSWORD, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, builder.getAuthBody(USERNAME, PASSWORD));
+                null, null, null, null, null, USERNAME, null);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("0", results.get(RETURN_CODE));
@@ -46,9 +41,9 @@ public class GetAuthTokenTest {
         String port = "5000";
         String trustAllRoots = "true";
 
-        Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
+        Map<String, String> results = authToken.execute(host, port, null, USERNAME, PASSWORD, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, builder.getAuthBody("admins", PASSWORD));
+                null, null, null, null, null, "admins", null);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));
@@ -63,9 +58,9 @@ public class GetAuthTokenTest {
         String port = "5001";
         String trustAllRoots = "true";
 
-        Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
+        Map<String, String> results = authToken.execute(host, port, null, USERNAME, PASSWORD, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, builder.getAuthBody(USERNAME, PASSWORD));
+                null, null, null, null, null, USERNAME, null);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));
@@ -76,12 +71,12 @@ public class GetAuthTokenTest {
     @Test
     public void authHostInvalid() {
         String host = "https://stack-9161.hpswlabs.com";
-        String port = "5001";
+        String port = "5000";
         String trustAllRoots = "true";
 
-        Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
+        Map<String, String> results = authToken.execute(host, port, null, USERNAME, PASSWORD, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, builder.getAuthBody("admins", PASSWORD));
+                null, null, null, null, null, USERNAME, null);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));

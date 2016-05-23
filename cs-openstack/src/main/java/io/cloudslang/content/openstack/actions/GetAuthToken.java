@@ -9,6 +9,8 @@ import com.hp.oo.sdk.content.plugin.ActionMetadata.ResponseType;
 import io.cloudslang.content.openstack.constants.InputNames;
 import io.cloudslang.content.openstack.constants.OutputNames;
 import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
+import io.cloudslang.content.openstack.entities.inputs.AuthInputs;
+import io.cloudslang.content.openstack.entities.inputs.CommonInputs;
 import io.cloudslang.content.openstack.services.HttpRequestService;
 import io.cloudslang.content.openstack.utils.StringUtils;
 
@@ -106,32 +108,42 @@ public class GetAuthToken {
                                             @Param(value = InputNames.KEYSTORE_PASSWORD, encrypted = true) String keystorePassword,
                                             @Param(InputNames.CONNECT_TIMEOUT) String connectTimeout,
                                             @Param(InputNames.SOCKET_TIMEOUT) String socketTimeout,
-                                            @Param(InputNames.REQUEST_BODY) String requestBody) {
+                                            @Param(InputNames.REQUEST_BODY) String requestBody,
+                                            @Param(InputNames.TENANT_NAME) String tenantName,
+                                            @Param(InputNames.TENANT_ID) String tenantId) {
         Map<String, String> resultMap = new HashMap<>();
-        HttpRequestWrapper requestWrapper = new HttpRequestWrapper();
         try {
-            requestWrapper.setHost(StringUtils.toRequiredString(host, ""));
-            requestWrapper.setPort(StringUtils.toString(port, ""));
-            requestWrapper.setProtocol(StringUtils.toString(protocol, ""));
-            requestWrapper.setUsername(StringUtils.toString(username, ""));
-            requestWrapper.setPassword(StringUtils.toString(password, ""));
-            requestWrapper.setProxyHost(StringUtils.toString(proxyHost, ""));
-            requestWrapper.setProxyPort(StringUtils.toString(proxyPort, ""));
-            requestWrapper.setProxyUsername(StringUtils.toString(proxyUsername, ""));
-            requestWrapper.setProxyPassword(StringUtils.toString(proxyPassword, ""));
-            requestWrapper.setTrustAllRoots(StringUtils.toString(trustAllRoots, ""));
-            requestWrapper.setX509HostnameVerifier(StringUtils.toString(x509HostnameVerifier, ""));
-            requestWrapper.setTrustKeystore(StringUtils.toString(trustKeystore, ""));
-            requestWrapper.setTrustPassword(StringUtils.toString(trustPassword, ""));
-            requestWrapper.setKeystore(StringUtils.toString(keystore, ""));
-            requestWrapper.setKeystorePassword(StringUtils.toString(keystorePassword, ""));
-            requestWrapper.setConnectTimeout(StringUtils.toString(connectTimeout, ""));
-            requestWrapper.setSocketTimeout(StringUtils.toString(socketTimeout, ""));
-            requestWrapper.setRequestBody(StringUtils.toString(requestBody, ""));
-            requestWrapper.setRequestMethod("POST");
-            requestWrapper.setRequestUri("/v2.0/tokens");
+            CommonInputs commonInputs = new CommonInputs.CommonInputsBuilder()
+                    .withHost(host)
+                    .withPort(port)
+                    .withProtocol(protocol)
+                    .withUsername(username)
+                    .withPassword(password)
+                    .withProxyHost(proxyHost)
+                    .withProxyPort(proxyPort)
+                    .withProxyUsername(proxyUsername)
+                    .withProxyPassword(proxyPassword)
+                    .withTrustAllRoots(trustAllRoots)
+                    .withX509HostnameVerifier(x509HostnameVerifier)
+                    .withTrustKeystore(trustKeystore)
+                    .withTrustPassword(trustPassword)
+                    .withKeystore(keystore)
+                    .withKeystorePassword(keystorePassword)
+                    .withConnectTimeout(connectTimeout)
+                    .withSocketTimeout(socketTimeout)
+                    .withRequestBody(requestBody)
+                    .withRequestMethod("POST")
+                    .withRequestUri("/v2.0/tokens")
+                    .build();
 
-            resultMap = httpRequestService.getAuthToken(requestWrapper);
+            AuthInputs authInputs = new AuthInputs.AuthInputsBuilder()
+                    .withPassword(password)
+                    .withUsername(username)
+                    .withTenantName(tenantName)
+                    .withTenantId(tenantId)
+                    .build();
+
+            resultMap = httpRequestService.getAuthToken(commonInputs, authInputs);
         } catch (Exception ex) {
             resultMap.put(OutputNames.RETURN_CODE, OutputNames.RETURN_CODE_FAILURE);
             resultMap.put(OutputNames.RETURN_RESULT, ex.getMessage());

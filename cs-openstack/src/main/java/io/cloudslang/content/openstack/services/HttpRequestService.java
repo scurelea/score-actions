@@ -8,18 +8,22 @@ import io.cloudslang.content.httpclient.ScoreHttpClient;
 import io.cloudslang.content.openstack.constants.OutputNames;
 import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
 import io.cloudslang.content.openstack.entities.identity.Access;
+import io.cloudslang.content.openstack.entities.inputs.AuthInputs;
+import io.cloudslang.content.openstack.entities.inputs.CommonInputs;
 import io.cloudslang.content.openstack.entities.storage.Volume;
 import io.cloudslang.content.openstack.utils.HttpClientUtils;
 import io.cloudslang.content.openstack.utils.StringUtils;
 import io.cloudslang.content.openstack.utils.json.JsonParser;
 
+import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequestService {
     private final String JSON_OBJECT_ACCESS = "access";
 
-    public Map<String, String> getAuthToken(HttpRequestWrapper requestWrapper) {
-        Map<String, String> results = performRestCall(requestWrapper, null);
+    public Map<String, String> getAuthToken(CommonInputs commonInputs, AuthInputs authInputs) throws Exception {
+        commonInputs.setRequestBody(JsonParser.toJson(authInputs.toAuth(),  AuthInputs.AUTH_ROOT));
+        Map<String, String> results = performRestCall(commonInputs, null);
 
         if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_200_SUCCESS_CODE)
                 || results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_201_SUCCESS_CODE)) {
@@ -35,8 +39,8 @@ public class HttpRequestService {
         return results;
     }
 
-    public Map<String, String> createVolume(HttpRequestWrapper requestWrapper, String token) {
-        Map<String, String> results = performRestCall(requestWrapper, token);
+    public Map<String, String> createVolume(CommonInputs commonInputs, String token) {
+        Map<String, String> results = performRestCall(commonInputs, token);
 
         if (results.get(OutputNames.STATUS_CODE).equals(OutputNames.HTTP_202_SUCCESS_CODE)) {
             String json = getJsonObject(results.get(OutputNames.RETURN_RESULT), "volume");
@@ -49,9 +53,9 @@ public class HttpRequestService {
         return results;
     }
 
-    private Map<String, String> performRestCall(HttpRequestWrapper requestWrapper, String token) {
+    private Map<String, String> performRestCall(CommonInputs commonInputs, String token) {
         ScoreHttpClient scoreClient = new ScoreHttpClient();
-        HttpClientInputs inputs = new HttpClientUtils().initHttpClientInputs(requestWrapper);
+        HttpClientInputs inputs = commonInputs.toClientInputs();
 
         if (StringUtils.isNotBlank(token)) {
             inputs.setHeaders("X-Auth-Token:" + token);

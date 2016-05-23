@@ -19,23 +19,18 @@ public class CreateVolumeTest {
     private final String AUTH_TOKEN = "authToken";
     private final String TENANT_ID = "tenantId";
 
+    private final String USERNAME = "admin";
+    private final String PASSWORD = "B33f34t3r";
+
     @Test
     public void getAuthTokenValid() {
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "5000";
         String trustAllRoots = "true";
-        String requestBody = "{\n" +
-                "    \"auth\": {\n" +
-                "        \"tenantName\": \"admin\",\n" +
-                "        \"passwordCredentials\": {\n" +
-                "            \"username\": \"admin\",\n" +
-                "            \"password\": \"B33f34t3r\"\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
-        Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
+
+        Map<String, String> results = authToken.execute(host, port, null, USERNAME, PASSWORD, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, requestBody);
+                null, null, null, null, null, USERNAME, null);
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("0", results.get(RETURN_CODE));
@@ -44,7 +39,7 @@ public class CreateVolumeTest {
         assertFalse(results.get(TENANT_ID).isEmpty());
 
         port = "8776";
-        requestBody = "{\n" +
+        String requestBody = "{\n" +
                 "    \"volume\": {\n" +
                 "        \"size\": 1,\n" +
                 "        \"availability_zone\": null,\n" +

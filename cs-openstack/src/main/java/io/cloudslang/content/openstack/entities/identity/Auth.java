@@ -11,9 +11,15 @@ public class Auth {
     @SerializedName("tenantName")
     @Expose
     private String tenantName;
+    @SerializedName("tenantId")
+    @Expose
+    private String tenantId;
     @SerializedName("passwordCredentials")
     @Expose
     private PasswordCredentials passwordCredentials;
+    @SerializedName("token")
+    @Expose
+    private Token token;
 
     /**
      * 
@@ -51,4 +57,39 @@ public class Auth {
         this.passwordCredentials = passwordCredentials;
     }
 
+    /**
+     *
+     * @return
+     * The token
+     */
+    public Token getToken() {
+        return token;
+    }
+
+    /**
+     *
+     * @param token
+     * The token
+     */
+    public void setToken(Token token) {
+        this.token = token;
+    }
+
+    /**
+     *
+     * @return
+     * The tenantId
+     */
+    public String getTenantId() {
+        return tenantId;
+    }
+
+    /**
+     *
+     * @param tenantId
+     * The tenantId
+     */
+    public void setTenantId(String tenantId) {
+        this.tenantId = tenantId;
+    }
 }
