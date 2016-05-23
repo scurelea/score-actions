@@ -1,6 +1,8 @@
 package io.cloudslang.content.openstack.services;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import io.cloudslang.content.httpclient.HttpClientInputs;
 import io.cloudslang.content.httpclient.ScoreHttpClient;
 import io.cloudslang.content.openstack.constants.OutputNames;
@@ -8,7 +10,6 @@ import io.cloudslang.content.openstack.entities.HttpRequestWrapper;
 import io.cloudslang.content.openstack.entities.identity.Access;
 import io.cloudslang.content.openstack.entities.storage.Volume;
 import io.cloudslang.content.openstack.utils.HttpClientUtils;
-import io.cloudslang.content.openstack.utils.json.JsonParser;
 import io.cloudslang.content.openstack.utils.StringUtils;
 import io.cloudslang.content.openstack.utils.json.JsonParser;
 
@@ -58,20 +59,6 @@ public class HttpRequestService {
 
         return scoreClient.execute(inputs);
     }
-
-    /**
-     * Get an json Object by name from json.
-     * @param json json string
-     * @param name name of the json object
-     * @return the json
-     */
-    private String getJsonObject(String json, String name) {
-        Gson gson = new Gson();
-        JsonElement element = gson.fromJson (json, JsonElement.class);
-        JsonObject object = element.getAsJsonObject().getAsJsonObject(name);
-        return object.toString();
-    }
-}
 
     /**
      * Get an json Object by name from json.

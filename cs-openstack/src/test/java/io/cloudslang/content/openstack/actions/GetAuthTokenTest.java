@@ -1,5 +1,9 @@
 package io.cloudslang.content.openstack.actions;
 
+import io.cloudslang.content.openstack.entities.identity.Auth;
+import io.cloudslang.content.openstack.entities.identity.PasswordCredentials;
+import io.cloudslang.content.openstack.utils.json.JsonBuilder;
+import io.cloudslang.content.openstack.utils.json.JsonParser;
 import org.junit.Test;
 
 import java.util.Map;
@@ -10,29 +14,24 @@ import static org.junit.Assert.assertNull;
 
 public class GetAuthTokenTest {
     GetAuthToken authToken = new GetAuthToken();
+    JsonBuilder builder = new JsonBuilder();
     private final String RETURN_CODE = "returnCode";
     private final String RETURN_RESULT = "returnResult";
     private final String STATUS_CODE = "statusCode";
     private final String AUTH_TOKEN = "authToken";
     private final String TENANT_ID = "tenantId";
 
+    private final String USERNAME = "admin";
+    private final String PASSWORD = "B33f34t3r";
+
     @Test
     public void getAuthTokenValid() {
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "5000";
         String trustAllRoots = "true";
-        String requestBody = "{\n" +
-                "    \"auth\": {\n" +
-                "        \"tenantName\": \"admin\",\n" +
-                "        \"passwordCredentials\": {\n" +
-                "            \"username\": \"admin\",\n" +
-                "            \"password\": \"B33f34t3r\"\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
         Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, requestBody);
+                null, null, null, null, builder.getAuthBody(USERNAME, PASSWORD));
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("0", results.get(RETURN_CODE));
@@ -46,18 +45,10 @@ public class GetAuthTokenTest {
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "5000";
         String trustAllRoots = "true";
-        String requestBody = "{\n" +
-                "    \"auth\": {\n" +
-                "        \"tenantName\": \"admins\",\n" +
-                "        \"passwordCredentials\": {\n" +
-                "            \"username\": \"admin\",\n" +
-                "            \"password\": \"B33f34t3r\"\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+
         Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, requestBody);
+                null, null, null, null, builder.getAuthBody("admins", PASSWORD));
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));
@@ -71,18 +62,10 @@ public class GetAuthTokenTest {
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String port = "5001";
         String trustAllRoots = "true";
-        String requestBody = "{\n" +
-                "    \"auth\": {\n" +
-                "        \"tenantName\": \"admin\",\n" +
-                "        \"passwordCredentials\": {\n" +
-                "            \"username\": \"admin\",\n" +
-                "            \"password\": \"B33f34t3r\"\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+
         Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, requestBody);
+                null, null, null, null, builder.getAuthBody(USERNAME, PASSWORD));
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));
@@ -95,22 +78,16 @@ public class GetAuthTokenTest {
         String host = "https://stack-9161.hpswlabs.com";
         String port = "5001";
         String trustAllRoots = "true";
-        String requestBody = "{\n" +
-                "    \"auth\": {\n" +
-                "        \"tenantName\": \"admin\",\n" +
-                "        \"passwordCredentials\": {\n" +
-                "            \"username\": \"admin\",\n" +
-                "            \"password\": \"B33f34t3r\"\n" +
-                "        }\n" +
-                "    }\n" +
-                "}";
+
         Map<String, String> results = authToken.execute(host, port, null, null, null, null, null,
                 null, null, trustAllRoots, null, null, null,
-                null, null, null, null, requestBody);
+                null, null, null, null, builder.getAuthBody("admins", PASSWORD));
 
         assertFalse(results.get(RETURN_RESULT).isEmpty());
         assertEquals("-1", results.get(RETURN_CODE));
         assertNull(results.get(AUTH_TOKEN));
         assertNull(results.get(TENANT_ID));
     }
+
+
 }

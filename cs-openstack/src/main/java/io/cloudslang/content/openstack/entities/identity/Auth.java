@@ -1,9 +1,9 @@
 package io.cloudslang.content.openstack.entities.identity;
 
-import javax.annotation.Generated;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import io.cloudslang.content.openstack.entities.PasswordCredentials;
+
+import javax.annotation.Generated;
 
 @Generated("org.jsonschema2pojo")
 public class Auth {
