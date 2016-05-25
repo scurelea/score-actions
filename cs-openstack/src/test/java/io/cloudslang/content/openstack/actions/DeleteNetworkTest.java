@@ -13,18 +13,20 @@ import static org.junit.Assert.assertFalse;
 public class DeleteNetworkTest {
 
     GetAuthToken authToken = new GetAuthToken();
+    CreateNetwork createNetwork = new CreateNetwork();
     DeleteNetwork deleteNetwork = new DeleteNetwork();
     private final String RETURN_CODE = "returnCode";
     private final String RETURN_RESULT = "returnResult";
     private final String STATUS_CODE = "statusCode";
     private final String AUTH_TOKEN = "authToken";
+    private final String NTW_ID_TOKEN = "uuid";
 
     @Test
     public void deleteNetworkValid() {
 
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String idPort = "5000";
-        String deletePort = "9696";
+        String networkPort = "9696";
         String trustAllRoots = "true";
         String requestBody = "{\n" +
                 "    \"auth\": {\n" +
@@ -48,7 +50,7 @@ public class DeleteNetworkTest {
         String token = results.get(AUTH_TOKEN);
         assertFalse(token.isEmpty());
 
-        String networkId = "bd12b6ff-5bb9-4a02-837e-92f0c2368e1c";
+        // create a network to delete later
         String protocol = "";
         String username = "";
         String password = "";
@@ -63,9 +65,26 @@ public class DeleteNetworkTest {
         String keystorePassword = "";
         String connectTimeout = "";
         String socketTimeout = "";
+        requestBody = "{\n" +
+                "    \"network\": {\n" +
+                "        \"admin_state_up\": true\n" +
+                "    }\n" +
+                "}";
+
+        results = createNetwork.execute(token, host, networkPort, protocol, username, password, proxyHost, proxyPort,
+                proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
+                keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
+
+        assertFalse(results.get(RETURN_RESULT).isEmpty());
+        assertEquals("0", results.get(RETURN_CODE));
+        assertEquals("201", results.get(STATUS_CODE));
+
+
+        // delete the created network
+        String networkId = results.get(NTW_ID_TOKEN);
         requestBody = "";
 
-        results = deleteNetwork.execute(token, networkId, host, deletePort, protocol, username, password, proxyHost, proxyPort,
+        results = deleteNetwork.execute(token, networkId, host, networkPort, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
                 keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
 

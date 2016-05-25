@@ -24,7 +24,7 @@ public class CreateNetworkTest {
 
         String host = "https://stack-9161.hpswlabs.adapps.hp.com";
         String idPort = "5000";
-        String createPort = "9696";
+        String networkPort = "9696";
         String trustAllRoots = "true";
         String requestBody = "{\n" +
                 "    \"auth\": {\n" +
@@ -68,7 +68,7 @@ public class CreateNetworkTest {
                 "    }\n" +
                 "}";
 
-        results = createNetwork.execute(token, host, createPort, protocol, username, password, proxyHost, proxyPort,
+        results = createNetwork.execute(token, host, networkPort, protocol, username, password, proxyHost, proxyPort,
                 proxyUsername, proxyPassword, trustAllRoots, x509HostnameVerifier, trustKeystore, trustPassword,
                 keystore, keystorePassword, connectTimeout, socketTimeout, requestBody);
 
